@@ -153,11 +153,33 @@ def main():
         Brick((252,235,2), 560,130),
         Brick((252,235,2), 670,130),
     ]
+    seconds = 0
+    clock = pygame.time.Clock()
+    time = 0
+    needed_time = 1000 # 1 second
 
     while run:
+        clock.tick()
+        time += clock.get_rawtime()
         win.fill((0,0,0))
         ball.move()
         draw_window(ball, paddle)
+
+        if time >= needed_time and not ball.still:
+            time = 0
+            seconds += 1
+
+            if seconds >= 5:
+                seconds = 0
+                if ball.xspeed < 0:
+                    ball.xspeed -= 0.1
+                else:
+                    ball.xspeed += 0.1
+                
+                if ball.yspeed < 0:
+                    ball.yspeed -= 0.1
+                else:
+                    ball.yspeed += 0.1
 
         if ball.out_of_lives:
             text = font.render('You Lost!', 1, (255, 26, 26))
