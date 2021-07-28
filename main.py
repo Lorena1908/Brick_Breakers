@@ -45,6 +45,7 @@ class Ball:
         self.paddle = paddle
         self.out_of_lives = False
         self.win = False
+        self.speedup_scale = 1.1
     
     def draw(self):
         if self.still:
@@ -171,15 +172,8 @@ def main():
 
             if seconds >= 5:
                 seconds = 0
-                if ball.xspeed < 0:
-                    ball.xspeed -= 0.1
-                else:
-                    ball.xspeed += 0.1
-                
-                if ball.yspeed < 0:
-                    ball.yspeed -= 0.1
-                else:
-                    ball.yspeed += 0.1
+                ball.xspeed *= ball.speedup_scale
+                ball.yspeed *= ball.speedup_scale
 
         if ball.out_of_lives:
             text = font.render('You Lost!', 1, (255, 26, 26))
